@@ -4,4 +4,4 @@ machine:
 
 test:
   override:
-    - mvn -o surefire:test
+    - mvn surefire:test
