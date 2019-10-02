@@ -1,5 +1,8 @@
 package com.scottlogic.librarygradproject;
 
+import com.scottlogic.librarygradproject.controller.BooksController;
+import com.scottlogic.librarygradproject.model.Book;
+import com.scottlogic.librarygradproject.service.BookService;
 import org.junit.Test;
 
 import static org.mockito.Mockito.*;
@@ -10,37 +13,37 @@ public class BooksControllerTest {
     public void getAll_Calls_Repo_GetAll() {
 
         // Arrange
-        BookRepository mockRepo = mock(BookRepository.class);
-        BooksController controller = new BooksController(mockRepo);
+        BookService mockService = mock(BookService.class);
+        BooksController controller = new BooksController(mockService);
 
         // Act
         controller.getAll();
 
         // Assert
-        verify(mockRepo).getAll();
+        verify(mockService).getAll();
     }
 
     @Test
-    public void get_With_Id_Calls_Repo_Get() {
+    public void get_With_Id_Calls_Service_Get() {
 
         // Arrange
         int id = 1;
-        BookRepository mockRepo = mock(BookRepository.class);
-        BooksController controller = new BooksController(mockRepo);
+        BookService mockService = mock(BookService.class);
+        BooksController controller = new BooksController(mockService);
 
         // Act
         controller.get(id);
 
         // Assert
-        verify(mockRepo).get(id);
+        verify(mockService).get(id);
     }
 
     @Test
-    public void post_With_Book_Calls_Repo_Add() {
+    public void post_With_Book_Calls_Service_Add() {
 
         // Arrange
-        BookRepository mockRepo = mock(BookRepository.class);
-        BooksController controller = new BooksController(mockRepo);
+        BookService mockService = mock(BookService.class);
+        BooksController controller = new BooksController(mockService);
 
         Book newBook = new Book();
 
@@ -48,21 +51,21 @@ public class BooksControllerTest {
         controller.post(newBook);
 
         // Assert
-        verify(mockRepo).add(newBook);
+        verify(mockService).add(newBook);
     }
 
     @Test
-    public void delete_With_Id_Calls_Repo_Remove() {
+    public void delete_With_Id_Calls_Service_Remove() {
 
         // Arrange
         int id = 1;
-        BookRepository mockRepo = mock(BookRepository.class);
-        BooksController controller = new BooksController(mockRepo);
+        BookService mockService = mock(BookService.class);
+        BooksController controller = new BooksController(mockService);
 
         // Act
         controller.delete(id);
 
         // Assert
-        verify(mockRepo).remove(id);
+        verify(mockService).remove(id);
     }
 }

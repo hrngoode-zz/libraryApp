@@ -1,4 +1,4 @@
-package com.scottlogic.librarygradproject;
+package com.scottlogic.librarygradproject.model;
 
 public class Book {
     private int id;
