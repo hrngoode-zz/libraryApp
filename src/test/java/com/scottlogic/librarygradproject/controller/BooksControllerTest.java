@@ -1,6 +1,5 @@
-package com.scottlogic.librarygradproject;
+package com.scottlogic.librarygradproject.controller;
 
-import com.scottlogic.librarygradproject.controller.BooksController;
 import com.scottlogic.librarygradproject.model.Book;
 import com.scottlogic.librarygradproject.service.BookService;
 import org.junit.Test;

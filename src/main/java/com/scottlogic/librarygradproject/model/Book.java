@@ -1,6 +1,6 @@
 package com.scottlogic.librarygradproject.model;
 
-public class Book {
+public class Book extends LibraryEntry{
     private int id;
     private String isbn;
     private String title;
@@ -32,6 +32,7 @@ public class Book {
         this.isbn = isbn;
     }
 
+    @Override
     public String getTitle() {
         return title;
     }
