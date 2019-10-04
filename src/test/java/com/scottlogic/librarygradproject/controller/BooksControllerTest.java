@@ -4,6 +4,8 @@ import com.scottlogic.librarygradproject.model.Book;
 import com.scottlogic.librarygradproject.service.BookService;
 import org.junit.Test;
 
+import java.util.UUID;
+
 import static org.mockito.Mockito.*;
 
 public class BooksControllerTest {
@@ -26,7 +28,7 @@ public class BooksControllerTest {
     public void get_With_Id_Calls_Service_Get() {
 
         // Arrange
-        int id = 1;
+        UUID id = new UUID(1,1);
         BookService mockService = mock(BookService.class);
         BooksController controller = new BooksController(mockService);
 
@@ -57,7 +59,7 @@ public class BooksControllerTest {
     public void delete_With_Id_Calls_Service_Remove() {
 
         // Arrange
-        int id = 1;
+        UUID id = new UUID(1,1);
         BookService mockService = mock(BookService.class);
         BooksController controller = new BooksController(mockService);
 

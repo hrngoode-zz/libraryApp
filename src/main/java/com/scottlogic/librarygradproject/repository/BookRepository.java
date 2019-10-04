@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public class BookRepository implements RepositoryInterface<Book> {
@@ -13,7 +14,7 @@ public class BookRepository implements RepositoryInterface<Book> {
     private List<Book> bookCollection = new ArrayList<>();
 
     @Override
-    public Optional<Book> get(int id){
+    public Optional<Book> get(UUID id){
         return bookCollection.stream()
                 .filter(book -> book.getId() == id)
                 .findFirst();
@@ -26,7 +27,6 @@ public class BookRepository implements RepositoryInterface<Book> {
 
     @Override
     public void add(Book entity) {
-        entity.setId(bookCollection.size());
         bookCollection.add(entity);
     }
 

@@ -1,31 +1,31 @@
 package com.scottlogic.librarygradproject.service;
 
 import com.scottlogic.librarygradproject.model.Book;
-import com.scottlogic.librarygradproject.repository.BookRepository;
+import com.scottlogic.librarygradproject.repository.FilledBookRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class BookServiceTest {
 
-    private BookRepository mockRepo;
+    private FilledBookRepository mockRepo;
     private BookService bookService;
 
     @Before
     public void setUp() throws Exception {
-        mockRepo = mock(BookRepository.class);
+        mockRepo = mock(FilledBookRepository.class);
         bookService = new BookService(mockRepo);
     }
 
@@ -53,12 +53,13 @@ public class BookServiceTest {
     public void get_Calls_Repo_Get()  {
 
         Book newBook = new Book();
+        UUID id = new UUID(1,1);
         Optional<Book> optionalBook = Optional.of(newBook);
 
-        when(mockRepo.get(1)).thenReturn(optionalBook);
+        when(mockRepo.get(id)).thenReturn(optionalBook);
 
-        bookService.get(1);
-        verify(mockRepo).get(1);
+        bookService.get(id);
+        verify(mockRepo).get(id);
     }
 
 

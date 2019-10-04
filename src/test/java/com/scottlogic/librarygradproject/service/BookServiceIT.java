@@ -2,11 +2,8 @@ package com.scottlogic.librarygradproject.service;
 
 
 import com.scottlogic.librarygradproject.model.Book;
-import com.scottlogic.librarygradproject.repository.BookRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -37,12 +34,12 @@ public class BookServiceIT {
         bookService.add(newBook3);
 
         //Act
-        bookService.remove(0);
+        bookService.remove(newBook1.getId());
         List<Book> books = bookService.getAll();
 
         //Assert
         assertThat(books, hasSize(2));
-        assertThat(books.toArray(), arrayContaining(new Book[]{newBook2, newBook3}));
+        assertThat(books.toArray(), arrayContaining(newBook2, newBook3));
     }
 
 }

@@ -1,7 +1,7 @@
 package com.scottlogic.librarygradproject.service;
 
-import java.util.Optional;
+import java.util.UUID;
 
 public interface ServiceInterface<T> {
-    T get(int id);
+    T get(UUID id);
 }

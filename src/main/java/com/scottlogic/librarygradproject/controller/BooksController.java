@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
@@ -24,12 +25,12 @@ public class BooksController {
     }
 
     @RequestMapping(value = "/books/{id}", method = RequestMethod.GET)
-    public Book get(@PathVariable int id) {
+    public Book get(@PathVariable(value = "id") UUID id) {
         return bookService.get(id);
     }
 
     @RequestMapping(value = "/books/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable int id) {
+    public void delete(@PathVariable(value = "id") UUID id) {
         bookService.remove(id);
     }
 

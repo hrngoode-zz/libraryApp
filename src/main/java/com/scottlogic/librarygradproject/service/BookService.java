@@ -1,21 +1,20 @@
 package com.scottlogic.librarygradproject.service;
 
 import com.scottlogic.librarygradproject.model.Book;
-import com.scottlogic.librarygradproject.repository.BookRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.scottlogic.librarygradproject.repository.FilledBookRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class BookService implements ServiceInterface<Book> {
 
-    private BookRepository bookRepository;
+    private FilledBookRepository bookRepository;
 
-    @Autowired
-    public BookService(BookRepository bookRepo) {
+    public BookService(FilledBookRepository bookRepo) {
         bookRepository = bookRepo;
     }
 
@@ -23,7 +22,7 @@ public class BookService implements ServiceInterface<Book> {
         return bookRepository.getAll();
     }
 
-    private Optional<Book> getOptionalBook(int id) {
+    private Optional<Book> getOptionalBook(UUID id) {
         return bookRepository
                 .getAll()
                 .stream()
@@ -32,13 +31,13 @@ public class BookService implements ServiceInterface<Book> {
     }
 
     @Override
-    public Book get(int id) {
+    public Book get(UUID id) {
         return bookRepository
                 .get(id)
                 .orElseThrow(NoSuchElementException::new);
     }
 
-    public void remove(int id) {
+    public void remove(UUID id) {
         Book bookToBeRemoved = get(id);
         bookRepository.remove(bookToBeRemoved);
     }
