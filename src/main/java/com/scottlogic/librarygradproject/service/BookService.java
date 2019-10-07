@@ -1,33 +1,26 @@
 package com.scottlogic.librarygradproject.service;
 
 import com.scottlogic.librarygradproject.model.Book;
-import com.scottlogic.librarygradproject.repository.FilledBookRepository;
+import com.scottlogic.librarygradproject.repository.FilledBookRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class BookService implements ServiceInterface<Book> {
 
-    private FilledBookRepository bookRepository;
+    private FilledBookRepo bookRepository;
 
-    public BookService(FilledBookRepository bookRepo) {
+    @Autowired
+    public BookService(FilledBookRepo bookRepo) {
         bookRepository = bookRepo;
     }
 
     public List<Book> getAll() {
         return bookRepository.getAll();
-    }
-
-    private Optional<Book> getOptionalBook(UUID id) {
-        return bookRepository
-                .getAll()
-                .stream()
-                .filter(book -> book.getId() == id)
-                .findFirst();
     }
 
     @Override
@@ -47,7 +40,8 @@ public class BookService implements ServiceInterface<Book> {
     }
 
     public void put(Book bookToUpdate) {
-        getOptionalBook(bookToUpdate.getId())
+        bookRepository
+                .get(bookToUpdate.getId())
                 .ifPresent(book -> remove(book.getId()));
         add(bookToUpdate);
     }

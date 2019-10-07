@@ -1,7 +1,7 @@
 package com.scottlogic.librarygradproject.service;
 
 import com.scottlogic.librarygradproject.model.Book;
-import com.scottlogic.librarygradproject.repository.FilledBookRepository;
+import com.scottlogic.librarygradproject.repository.FilledBookRepo;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,17 +20,17 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 public class BookServiceTest {
 
-    private FilledBookRepository mockRepo;
     private BookService bookService;
+    private FilledBookRepo mockRepo;
 
     @Before
-    public void setUp() throws Exception {
-        mockRepo = mock(FilledBookRepository.class);
+    public void setUp() {
+        mockRepo = mock(FilledBookRepo.class);
         bookService = new BookService(mockRepo);
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
     }
 
     @Test
@@ -61,8 +61,6 @@ public class BookServiceTest {
         bookService.get(id);
         verify(mockRepo).get(id);
     }
-
-
 
     @Test
     public void remove() {
