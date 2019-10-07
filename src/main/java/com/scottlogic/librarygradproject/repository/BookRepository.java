@@ -16,7 +16,7 @@ public class BookRepository implements RepositoryInterface<Book> {
     @Override
     public Optional<Book> get(UUID id){
         return bookCollection.stream()
-                .filter(book -> book.getId() == id)
+                .filter(book -> book.getId().equals(id))
                 .findFirst();
     }
 
