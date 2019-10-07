@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public class BookRepository implements RepositoryInterface<Book> {
+public class BookRepository implements RepositoryInterface<Book, UUID> {
 
     private List<Book> bookCollection = new ArrayList<>();
 

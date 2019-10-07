@@ -74,11 +74,6 @@ public class Book extends LibraryEntry{
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + (isbn != null ? isbn.hashCode() : 0);
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (author != null ? author.hashCode() : 0);
-        result = 31 * result + (publishDate != null ? publishDate.hashCode() : 0);
-        return result;
+        return 31 * id.hashCode();
     }
 }

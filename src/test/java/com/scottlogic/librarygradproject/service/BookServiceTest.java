@@ -24,13 +24,14 @@ public class BookServiceTest {
     private BookService bookService;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         mockRepo = mock(FilledBookRepository.class);
         bookService = new BookService(mockRepo);
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
+
     }
 
     @Test
@@ -62,17 +63,13 @@ public class BookServiceTest {
         verify(mockRepo).get(id);
     }
 
-
-
-    @Test
     public void remove() {
+
     }
 
-    @Test
     public void add() {
     }
 
-    @Test
     public void put() {
     }
 }
