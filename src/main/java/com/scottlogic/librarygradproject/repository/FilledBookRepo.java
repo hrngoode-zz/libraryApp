@@ -5,37 +5,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+
 
 @Repository("Filled")
-public class FilledBookRepo implements RepositoryInterface<Book>{
-
-    private JpaRepo jpaRepo;
+public class FilledBookRepo extends BookRepository{
 
     @Autowired
     public FilledBookRepo(List<Book> books, JpaRepo jpaRepo) {
-        this.jpaRepo = jpaRepo;
-        books.forEach(jpaRepo::save);
+        setJpaRepo(jpaRepo);
+        books.forEach(this::add);
     }
 
-    @Override
-    public Optional<Book> get(UUID id) {
-        return jpaRepo.findById(id);
-    }
-
-    @Override
-    public List<Book> getAll() {
-        return jpaRepo.findAll();
-    }
-
-    @Override
-    public void add(Book entity) {
-        jpaRepo.save(entity);
-    }
-
-    @Override
-    public void remove(Book entity) {
-        jpaRepo.delete(entity);
-    }
 }

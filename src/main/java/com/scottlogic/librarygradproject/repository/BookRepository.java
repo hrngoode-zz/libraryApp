@@ -1,37 +1,47 @@
 package com.scottlogic.librarygradproject.repository;
 
 import com.scottlogic.librarygradproject.model.Book;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Repository
+@Repository("Empty")
 public class BookRepository implements RepositoryInterface<Book> {
 
-    private List<Book> bookCollection = new ArrayList<>();
+    private JpaRepo jpaRepo;
+
+    public BookRepository() {
+    }
+
+    @Autowired
+    public BookRepository(JpaRepo jpaRepo) {
+        setJpaRepo(jpaRepo);
+    }
 
     @Override
-    public Optional<Book> get(UUID id){
-        return bookCollection.stream()
-                .filter(book -> book.getId().equals(id))
-                .findFirst();
+    public Optional<Book> get(UUID id) {
+        return jpaRepo.findById(id);
     }
 
     @Override
     public List<Book> getAll() {
-        return bookCollection;
+        return jpaRepo.findAll();
     }
 
     @Override
     public void add(Book entity) {
-        bookCollection.add(entity);
+        jpaRepo.save(entity);
     }
 
     @Override
-    public void remove(Book bookToRemove) {
-        bookCollection.remove(bookToRemove);
+    public void remove(Book entity) {
+        jpaRepo.delete(entity);
+    }
+
+    void setJpaRepo(JpaRepo jpaRepo) {
+        this.jpaRepo = jpaRepo;
     }
 }
