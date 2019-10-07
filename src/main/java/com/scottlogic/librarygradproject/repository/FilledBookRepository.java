@@ -2,16 +2,14 @@ package com.scottlogic.librarygradproject.repository;
 
 import com.scottlogic.librarygradproject.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
-@Repository("Filled")
-public class FilledBookRepo extends BookRepository{
+public class FilledBookRepository extends BookRepository{
 
     @Autowired
-    public FilledBookRepo(List<Book> books, JpaRepo jpaRepo) {
+    public FilledBookRepository(List<Book> books, JpaRepo jpaRepo) {
+        super(jpaRepo);
         setJpaRepo(jpaRepo);
         books.forEach(this::add);
     }

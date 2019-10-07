@@ -1,7 +1,7 @@
 package com.scottlogic.librarygradproject.service;
 
 import com.scottlogic.librarygradproject.model.Book;
-import com.scottlogic.librarygradproject.repository.FilledBookRepo;
+import com.scottlogic.librarygradproject.repository.FilledBookRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,11 +21,11 @@ import static org.mockito.Mockito.*;
 public class BookServiceTest {
 
     private BookService bookService;
-    private FilledBookRepo mockRepo;
+    private FilledBookRepository mockRepo;
 
     @Before
     public void setUp() {
-        mockRepo = mock(FilledBookRepo.class);
+        mockRepo = mock(FilledBookRepository.class);
         bookService = new BookService(mockRepo);
     }
 

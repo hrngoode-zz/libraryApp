@@ -2,19 +2,16 @@ package com.scottlogic.librarygradproject.repository;
 
 import com.scottlogic.librarygradproject.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Repository("Empty")
 public class BookRepository implements RepositoryInterface<Book> {
 
     private JpaRepo jpaRepo;
 
-    public BookRepository() {
-    }
+    public BookRepository() {}
 
     @Autowired
     public BookRepository(JpaRepo jpaRepo) {

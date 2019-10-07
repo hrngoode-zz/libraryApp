@@ -1,21 +1,22 @@
 package com.scottlogic.librarygradproject.service;
 
 import com.scottlogic.librarygradproject.model.Book;
-import com.scottlogic.librarygradproject.repository.FilledBookRepo;
+import com.scottlogic.librarygradproject.repository.BookRepository;
+import com.scottlogic.librarygradproject.repository.FilledBookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
-@Service
+@Component
 public class BookService implements ServiceInterface<Book> {
 
-    private FilledBookRepo bookRepository;
+    private BookRepository bookRepository;
 
     @Autowired
-    public BookService(FilledBookRepo bookRepo) {
+    public BookService(FilledBookRepository bookRepo) {
         bookRepository = bookRepo;
     }
 
