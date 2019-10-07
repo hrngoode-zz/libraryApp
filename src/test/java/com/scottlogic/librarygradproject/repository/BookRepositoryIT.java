@@ -1,8 +1,8 @@
 package com.scottlogic.librarygradproject.repository;
 
 import com.scottlogic.librarygradproject.model.Book;
-import com.scottlogic.librarygradproject.repository.BookRepository;
 import org.junit.Test;
+
 import java.util.List;
 
 import static org.junit.Assert.*;

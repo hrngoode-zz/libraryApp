@@ -4,6 +4,8 @@ import com.scottlogic.librarygradproject.model.Book;
 import com.scottlogic.librarygradproject.repository.BookRepository;
 import com.scottlogic.librarygradproject.repository.FilledBookRepository;
 import com.scottlogic.librarygradproject.repository.JpaRepo;
+import com.scottlogic.librarygradproject.service.BookService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -45,6 +47,11 @@ public class Config {
     @Bean("Empty")
     BookRepository bookRepository(JpaRepo jpaRepo) {
         return new BookRepository(jpaRepo);
+    }
+
+    @Bean
+    BookService bookService(@Qualifier("Filled") BookRepository bookRepository) {
+        return new BookService(bookRepository);
     }
 
 }
