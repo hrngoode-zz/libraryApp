@@ -1,6 +1,8 @@
-package com.scottlogic.librarygradproject;
+package com.scottlogic.librarygradproject.repository;
 
+import com.scottlogic.librarygradproject.model.Book;
 import org.junit.Test;
+
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -51,23 +53,6 @@ public class BookRepositoryTest {
     }
 
     @Test
-    public void get_Returns_Specific_Books() {
-
-        // Arrange
-        BookRepository repo = new BookRepository();
-        Book newBook1 = new Book();
-        Book newBook2 = new Book();
-        repo.add(newBook1);
-        repo.add(newBook2);
-
-        // Act
-        Book book = repo.get(1);
-
-        // Assert
-        assertEquals(newBook2, book);
-    }
-
-    @Test
     public void getAll_Returns_All_Books() {
 
         // Arrange
@@ -85,6 +70,23 @@ public class BookRepositoryTest {
     }
 
     @Test
+    public void get_Returns_Specific_Books() {
+
+        // Arrange
+        BookRepository repo = new BookRepository();
+        Book newBook1 = new Book();
+        Book newBook2 = new Book();
+        repo.add(newBook1);
+        repo.add(newBook2);
+
+        // Act
+        Book book = repo.get(newBook2.getId()).get();
+
+        // Assert
+        assertEquals(newBook2, book);
+    }
+
+    @Test
     public void delete_Removes_Correct_Book() {
 
         // Arrange
@@ -97,10 +99,10 @@ public class BookRepositoryTest {
         repo.add(newBook3);
 
         // Act
-        repo.remove(1);
+        repo.remove(newBook1);
         List<Book> books = repo.getAll();
 
         // Assert
-        assertArrayEquals(new Book[] { newBook1, newBook3 }, books.toArray());
+        assertArrayEquals(new Book[] { newBook2, newBook3 }, books.toArray());
     }
 }

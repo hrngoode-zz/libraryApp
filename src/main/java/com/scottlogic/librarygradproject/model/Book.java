@@ -1,7 +1,11 @@
-package com.scottlogic.librarygradproject;
+package com.scottlogic.librarygradproject.model;
 
-public class Book {
-    private int id;
+import java.util.UUID;
+
+
+public class Book extends LibraryEntry{
+
+    private UUID id;
     private String isbn;
     private String title;
     private String author;
@@ -14,14 +18,11 @@ public class Book {
         this.title = title;
         this.author = author;
         this.publishDate = publishDate;
+        this.id = UUID.randomUUID();
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getIsbn() {
@@ -32,6 +33,7 @@ public class Book {
         this.isbn = isbn;
     }
 
+    @Override
     public String getTitle() {
         return title;
     }
@@ -72,11 +74,6 @@ public class Book {
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (isbn != null ? isbn.hashCode() : 0);
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (author != null ? author.hashCode() : 0);
-        result = 31 * result + (publishDate != null ? publishDate.hashCode() : 0);
-        return result;
+        return 31 * id.hashCode();
     }
 }
