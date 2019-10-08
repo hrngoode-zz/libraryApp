@@ -62,17 +62,13 @@ public class BookServiceTest {
         verify(mockRepo).get(id);
     }
 
-    @Test
     public void remove() {
+
     }
 
-    @Test
     public void add() {
     }
 
-    @Test
     public void put() {
     }
 }
-
-

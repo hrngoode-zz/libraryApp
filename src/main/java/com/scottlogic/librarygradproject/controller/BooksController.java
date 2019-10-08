@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/books")
 public class BooksController {
 
     private BookService bookService;
@@ -19,27 +19,27 @@ public class BooksController {
         bookService = service;
     }
 
-    @RequestMapping(value = "/books", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public List<Book> getAll() {
         return bookService.getAll();
     }
 
-    @RequestMapping(value = "/books/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Book get(@PathVariable(value = "id") UUID id) {
         return bookService.get(id);
     }
 
-    @RequestMapping(value = "/books/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable(value = "id") UUID id) {
         bookService.remove(id);
     }
 
-    @RequestMapping(value = "/books", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public void post(@RequestBody() Book book) {
         bookService.add(book);
     }
 
-    @RequestMapping(value = "/books", method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     public void put(@RequestBody() Book book) {
         bookService.put(book);
     }

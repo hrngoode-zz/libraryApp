@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public class BookRepository implements RepositoryInterface<Book> {
+@Repository
+public class BookRepository implements RepositoryInterface<Book, UUID> {
 
     @Autowired
     private JpaRepo jpaRepo;
