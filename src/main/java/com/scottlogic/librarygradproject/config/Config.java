@@ -54,9 +54,4 @@ public class Config {
         return new BookService(bookRepository);
     }
 
-//    @Bean("TestJpa")
-//    public JpaRepo jpaRepo(){
-//        return Mockito.mock(JpaRepo.class);
-//    }
-
 }
