@@ -1,9 +1,12 @@
 package com.scottlogic.librarygradproject.repository;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 public class FilledBookRepositoryTest {
 
+    @Test
+    public void Check_Not_Empty_On_Instantiation(){
 
+    }
 
 }

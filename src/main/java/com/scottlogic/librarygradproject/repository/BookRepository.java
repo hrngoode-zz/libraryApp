@@ -9,6 +9,7 @@ import java.util.UUID;
 
 public class BookRepository implements RepositoryInterface<Book> {
 
+    @Autowired
     private JpaRepo jpaRepo;
 
     public BookRepository() {}
