@@ -13,4 +13,4 @@ log/
 target/
 
 # Config
-/application.properties
+#/application.properties
