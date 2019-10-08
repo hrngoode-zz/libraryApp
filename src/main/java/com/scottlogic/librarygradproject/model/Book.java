@@ -1,11 +1,17 @@
 package com.scottlogic.librarygradproject.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.UUID;
 
-
+@Entity
 public class Book extends LibraryEntry{
 
+    @Id
+    @GeneratedValue
     private UUID id;
+
     private String isbn;
     private String title;
     private String author;

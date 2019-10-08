@@ -20,8 +20,8 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 public class BookServiceTest {
 
-    private FilledBookRepository mockRepo;
     private BookService bookService;
+    private FilledBookRepository mockRepo;
 
     @Before
     public void setUp() {
@@ -31,7 +31,6 @@ public class BookServiceTest {
 
     @After
     public void tearDown() {
-
     }
 
     @Test
@@ -73,5 +72,3 @@ public class BookServiceTest {
     public void put() {
     }
 }
-
-
