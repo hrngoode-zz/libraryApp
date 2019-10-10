@@ -1,0 +1,82 @@
+package com.scottlogic.librarygradproject.service;
+
+import com.scottlogic.librarygradproject.model.Reservation;
+import com.scottlogic.librarygradproject.repository.ReservationRepo;
+
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+public class ReservationService implements ServiceInterface<Reservation> {
+
+    private ReservationRepo reservationRepo;
+
+    public ReservationService() {
+    }
+
+    public ReservationService(ReservationRepo reservationRepo){
+        this.reservationRepo = reservationRepo;
+    }
+
+    public ReservationService(ReservationRepo reservationRepo, List<Reservation> reservations){
+        this.reservationRepo = reservationRepo;
+        reservations.forEach(reservationRepo::save);
+    }
+
+    @Override
+    public Reservation get(UUID id) {
+        return reservationRepo
+                .findById(id)
+                .orElseThrow(NoSuchElementException::new);
+    }
+
+    public List<Reservation> getAll() {
+        return reservationRepo.findAll();
+    }
+
+    public void remove(UUID id) {
+        reservationRepo.deleteById(id);
+    }
+
+    public boolean add(Reservation reservation) {
+        //check if dates make sense
+        if (reservation.getDateOut().isAfter(reservation.getDateReturned())) return false;
+        if(reservation.getDateOut().isBefore(reservation.getDateMade())) return false;
+
+        //check if book is already reserved at this time
+        List<Reservation> allBookRes = reservationRepo
+                .findAll()
+                .stream()
+                .filter(
+                        reservation1 ->
+                                reservation1.getBookId()
+                                        .equals(
+                                                reservation.getBookId()
+                                        )
+                )
+                .filter(
+                        requestedRes -> reservation.getDateOut().isAfter(requestedRes.getDateReturned())
+                )
+                .filter(
+                        requestedRes -> reservation.getDateReturned().isBefore(requestedRes.getDateOut())
+                )
+                .collect(Collectors.toList());
+
+        if(allBookRes.size() == 0) {
+            reservationRepo.save(reservation);
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean put(Reservation reservation) {
+        reservationRepo
+                .findById(reservation.getId())
+                .ifPresent(
+                        reservationRepo::delete
+                );
+        return add(reservation);
+    }
+}

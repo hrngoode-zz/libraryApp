@@ -3,9 +3,11 @@ package com.scottlogic.librarygradproject.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.UUID;
 
 @Entity
+@Table(name = "Library")
 public class Book extends LibraryEntry{
 
     @Id
