@@ -2,6 +2,7 @@ package com.scottlogic.librarygradproject.service;
 
 import com.scottlogic.librarygradproject.model.Reservation;
 import com.scottlogic.librarygradproject.repository.ReservationRepo;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -12,8 +13,6 @@ public class ReservationService implements ServiceInterface<Reservation> {
 
     private ReservationRepo reservationRepo;
 
-    public ReservationService() {
-    }
 
     public ReservationService(ReservationRepo reservationRepo){
         this.reservationRepo = reservationRepo;
@@ -39,27 +38,20 @@ public class ReservationService implements ServiceInterface<Reservation> {
         reservationRepo.deleteById(id);
     }
 
-    public boolean add(Reservation reservation) {
+    public boolean add(@NotNull Reservation reservation) {
         //check if dates make sense
         if (reservation.getDateOut().isAfter(reservation.getDateReturned())) return false;
         if(reservation.getDateOut().isBefore(reservation.getDateMade())) return false;
 
         //check if book is already reserved at this time
         List<Reservation> allBookRes = reservationRepo
-                .findAll()
+                .findByBookId(reservation.getBookId())
                 .stream()
                 .filter(
-                        reservation1 ->
-                                reservation1.getBookId()
-                                        .equals(
-                                                reservation.getBookId()
-                                        )
-                )
-                .filter(
-                        requestedRes -> reservation.getDateOut().isAfter(requestedRes.getDateReturned())
-                )
-                .filter(
-                        requestedRes -> reservation.getDateReturned().isBefore(requestedRes.getDateOut())
+                        requestedRes -> !(
+                                (reservation.getDateOut().isAfter(requestedRes.getDateReturned()))
+                                || (reservation.getDateReturned().isBefore(requestedRes.getDateOut()))
+                        )
                 )
                 .collect(Collectors.toList());
 
@@ -74,9 +66,8 @@ public class ReservationService implements ServiceInterface<Reservation> {
     public boolean put(Reservation reservation) {
         reservationRepo
                 .findById(reservation.getId())
-                .ifPresent(
-                        reservationRepo::delete
-                );
+                .ifPresent(reservationRepo::delete);
+
         return add(reservation);
     }
 }

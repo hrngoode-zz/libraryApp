@@ -9,7 +9,6 @@ public class Movie extends LibraryEntry {
         this.title = title;
     }
 
-    @Override
     public String getTitle() {
         return title;
     }

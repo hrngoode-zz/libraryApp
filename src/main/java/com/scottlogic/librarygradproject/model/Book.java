@@ -1,17 +1,15 @@
 package com.scottlogic.librarygradproject.model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.UUID;
 
 @Entity
 @Table(name = "Library")
-public class Book extends LibraryEntry{
+public class Book {
 
     @Id
-    @GeneratedValue
     private UUID id;
 
     private String isbn;
@@ -21,12 +19,12 @@ public class Book extends LibraryEntry{
 
     public Book() { }
 
-    public Book(String isbn, String title, String author, String publishDate) {
+    public Book(String isbn, String title, String author, String publishDate, UUID id) {
         this.isbn = isbn;
         this.title = title;
         this.author = author;
         this.publishDate = publishDate;
-        this.id = UUID.randomUUID();
+        this.id = id;
     }
 
     public UUID getId() {
@@ -41,7 +39,6 @@ public class Book extends LibraryEntry{
         this.isbn = isbn;
     }
 
-    @Override
     public String getTitle() {
         return title;
     }
@@ -73,7 +70,7 @@ public class Book extends LibraryEntry{
 
         Book book = (Book) o;
 
-        if (id != book.id) return false;
+        if (!id.equals(book.id)) return false;
         if (isbn != null ? !isbn.equals(book.isbn) : book.isbn != null) return false;
         if (title != null ? !title.equals(book.title) : book.title != null) return false;
         if (author != null ? !author.equals(book.author) : book.author != null) return false;
@@ -84,4 +81,6 @@ public class Book extends LibraryEntry{
     public int hashCode() {
         return 31 * id.hashCode();
     }
+
+
 }

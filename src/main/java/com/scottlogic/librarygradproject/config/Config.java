@@ -29,19 +29,22 @@ public class Config {
                         "isbn1",
                         "title1",
                         "author1",
-                        "publishDate1"
+                        "publishDate1",
+                        UUID.randomUUID()
                 ),
                 new Book(
                         "isbn3",
                         "title3",
                         "author3",
-                        "publishDate3"
+                        "publishDate3",
+                        UUID.randomUUID()
                 ),
                 new Book(
                         "isbn2",
                         "title2",
                         "author2",
-                        "publishDate2"
+                        "publishDate2",
+                        UUID.randomUUID()
                 )
         );
     }
@@ -57,7 +60,7 @@ public class Config {
     }
 
     @Bean
-    BookService bookService(@Qualifier("Filled") BookRepository bookRepository) {
+    BookService bookService(@Qualifier("Empty") BookRepository bookRepository) {
         return new BookService(bookRepository);
     }
 
@@ -70,8 +73,8 @@ public class Config {
                         UUID.randomUUID(),
                         "one",
                         LocalDate.now(),
+                        LocalDate.of(2021, 11, 17),
                         LocalDate.of(2023, 11, 17),
-                        LocalDate.of(2023, 12, 17),
                         UUID.fromString("8eab68d1-b312-4fa3-bdfc-816c63fbc9c2")
                 ),
                 new Reservation(
@@ -79,7 +82,7 @@ public class Config {
                         "two",
                         LocalDate.now(),
                         LocalDate.of(2024, 11, 17),
-                        LocalDate.of(2024, 12, 17),
+                        LocalDate.of(2026, 11, 17),
                         UUID.fromString("e848c19b-6165-418a-9950-02e72f5b52e4")
                 ),
                 new Reservation(
@@ -87,13 +90,13 @@ public class Config {
                         "three",
                         LocalDate.now(),
                         LocalDate.of(2025, 11, 17),
-                        LocalDate.of(2025, 12, 17),
+                        LocalDate.of(2027, 11, 17),
                         UUID.fromString("c4f3a4d5-7b85-433d-aade-9fa135cd2f6e")
                 )
         );
     }
 
-    @Bean("DummyData")
+    @Bean
     ReservationService reservationService(ReservationRepo reservationRepo, List<Reservation> reservations){
         return new ReservationService(reservationRepo, reservations);
     }

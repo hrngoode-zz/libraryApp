@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
-@Repository("RealJpa")
+@Repository
 public interface JpaRepo extends JpaRepository<Book, UUID> {
 }

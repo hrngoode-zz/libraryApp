@@ -2,7 +2,6 @@ package com.scottlogic.librarygradproject.controller;
 
 import com.scottlogic.librarygradproject.model.Reservation;
 import com.scottlogic.librarygradproject.service.ReservationService;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,7 +14,7 @@ public class ReservationController {
     private ReservationService reservationService;
 
     public ReservationController(
-            @Qualifier("DummyData") ReservationService reservationService) {
+            ReservationService reservationService) {
         this.reservationService = reservationService;
     }
 
