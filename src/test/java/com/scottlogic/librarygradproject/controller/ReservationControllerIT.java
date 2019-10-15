@@ -19,7 +19,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -28,6 +28,7 @@ class ReservationControllerIT {
 
     @Autowired
     private MockMvc mockMvc;
+
 
     @MockBean
     private ReservationService reservationService;
@@ -63,7 +64,6 @@ class ReservationControllerIT {
 
     @Test
     void post_CorrectParameters_ShouldReturn200Status() throws Exception {
-
         mockMvc.perform(
                 post("/reservations")
                 .contentType(APPLICATION_JSON_UTF8)
@@ -74,22 +74,42 @@ class ReservationControllerIT {
     }
 
     @Test
-    void getAll() {
+    void getAll_NoParameters_ShouldReturn200Status() throws Exception {
+        mockMvc.perform(
+                get("/reservations")
+        )
+                .andExpect(status().isOk())
+                .andReturn();
     }
 
     @Test
-    void get() {
+    void put_CorrectParameters_ShouldReturn200Status() throws Exception {
+        mockMvc.perform(
+                put("/reservations")
+                        .contentType(APPLICATION_JSON_UTF8)
+                        .content(json)
+        )
+                .andExpect(status().isOk())
+                .andReturn();
     }
 
     @Test
-    void delete() {
+    void get_AssignedId_ShouldReturn200Status() throws Exception {
+        reservationService.add(reservation);
+        mockMvc.perform(
+                get("/reservations/{id}", uuid)
+        )
+                .andExpect(status().isOk())
+                .andReturn();
     }
 
-//    @Test
-//    void post() {
-//    }
-
     @Test
-    void put() {
+    void delete_MatchingIdShouldReturn200Status() throws Exception {
+        reservationService.add(reservation);
+        mockMvc.perform(
+                delete("/reservations/{id}", uuid)
+        )
+                .andExpect(status().isOk())
+                .andReturn();
     }
 }

@@ -5,6 +5,7 @@ import com.scottlogic.librarygradproject.service.ReservationService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @RestController
@@ -18,14 +19,14 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public Reservation get(@PathVariable(value = "id") UUID id) throws NoSuchElementException {
+        return reservationService.get(id);
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     public List<Reservation> getAll() {
         return reservationService.getAll();
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Reservation get(@PathVariable(value = "id") UUID id) {
-        return reservationService.get(id);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
