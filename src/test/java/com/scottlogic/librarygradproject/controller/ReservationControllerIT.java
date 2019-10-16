@@ -1,6 +1,7 @@
 package com.scottlogic.librarygradproject.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.scottlogic.librarygradproject.model.Reservation;
 import com.scottlogic.librarygradproject.service.ReservationService;
 import org.junit.jupiter.api.AfterEach;
@@ -29,7 +30,6 @@ class ReservationControllerIT {
     @Autowired
     private MockMvc mockMvc;
 
-
     @MockBean
     private ReservationService reservationService;
 
@@ -43,6 +43,7 @@ class ReservationControllerIT {
     @BeforeEach
     void setUp() {
         uuid = UUID.randomUUID();
+        objectMapper.registerModule(new JavaTimeModule());
         reservation = new Reservation(
                 uuid,
                 "post name",

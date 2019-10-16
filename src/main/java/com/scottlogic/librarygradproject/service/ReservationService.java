@@ -13,7 +13,6 @@ public class ReservationService implements ServiceInterface<Reservation> {
 
     private ReservationRepo reservationRepo;
 
-
     public ReservationService(ReservationRepo reservationRepo){
         this.reservationRepo = reservationRepo;
     }
@@ -40,8 +39,7 @@ public class ReservationService implements ServiceInterface<Reservation> {
 
     public boolean add(@NotNull Reservation reservation) {
         //check if dates make sense
-        if (reservation.getDateOut().isAfter(reservation.getDateReturned())) return false;
-        if(reservation.getDateOut().isBefore(reservation.getDateMade())) return false;
+        if(!isReservationValid(reservation)) return false;
 
         //check if book is already reserved at this time
         List<Reservation> allBookRes = reservationRepo
@@ -69,5 +67,12 @@ public class ReservationService implements ServiceInterface<Reservation> {
                 .ifPresent(reservationRepo::delete);
 
         return add(reservation);
+    }
+
+    private boolean isReservationValid(Reservation reservation) {
+        return !(
+                reservation.getDateOut().isAfter(reservation.getDateReturned())
+                || reservation.getDateOut().isBefore(reservation.getDateMade())
+                );
     }
 }

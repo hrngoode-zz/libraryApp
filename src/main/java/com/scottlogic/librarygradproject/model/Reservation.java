@@ -26,13 +26,9 @@ public class Reservation {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOut;
 
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateReturned;
 
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateMade;
     private UUID bookId;
