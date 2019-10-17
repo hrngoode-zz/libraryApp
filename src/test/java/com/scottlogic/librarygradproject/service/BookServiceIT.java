@@ -57,9 +57,6 @@ public class BookServiceIT {
 
     @After
     public void tearDown(){
-        book3 = null;
-        book2 = null;
-        book1 = null;
     }
 
 

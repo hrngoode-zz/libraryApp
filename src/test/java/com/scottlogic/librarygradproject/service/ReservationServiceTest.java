@@ -40,9 +40,7 @@ class ReservationServiceTest {
 
     @AfterEach
     void tearDown() {
-        reservationService = null;
         reservationRepo.deleteAll();
-
     }
 
     @Test

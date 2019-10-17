@@ -7,86 +7,113 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ReservationTest {
 
     private UUID uuid = UUID.randomUUID();
     private String partyName = "test";
-    private LocalDate dateOut = LocalDate.of(2003, 11, 17);
-    private LocalDate dateReturned = LocalDate.of(2003, 11, 18);
-    private LocalDate dateMade = LocalDate.of(2019, 10, 10);
+    private LocalDate dateOut = LocalDate.parse("2003-11-17");
+    private LocalDate dateReturned = LocalDate.parse("2003-11-18");
+    private LocalDate dateMade = LocalDate.parse("2019-10-10");
     private UUID bookId = UUID.randomUUID();
 
 
-    private Reservation reservation;
+    private Reservation one;
+    private Reservation two;
 
     @BeforeEach
     void setUp() {
-        reservation = new Reservation(uuid, partyName, dateMade, dateOut, dateReturned, bookId);
+
+        one = new Reservation(uuid, partyName, dateMade, dateOut, dateReturned, bookId);
+        two = new Reservation(uuid, partyName, dateMade, dateOut, dateReturned, bookId);
     }
 
     @AfterEach
     void tearDown() {
-        reservation = null;
+
     }
 
     @Test
-    void getId() {
-        assertThat(reservation.getId(), is(uuid));
+    void equals_DuplicateReservationObjects_ShouldBeEqual() {
+        assertEquals(one, two);
     }
 
     @Test
-    void getPartyName() {
-        assertThat(reservation.getPartyName(), is(partyName));
+    void equals_ReservationObjectsHaveDifferentIds_ShouldNotEqual() {
+        two = new Reservation(
+                UUID.randomUUID(),
+                partyName,
+                dateMade,
+                dateOut,
+                dateReturned,
+                bookId
+        );
+        assertNotEquals(one, two);
     }
 
     @Test
-    void setPartyName() {
-        String newName = "new";
-        reservation.setPartyName(newName);
-        assertThat(reservation.getPartyName(), is(newName));
+    void equals_ReservationObjectsHaveDifferentNames_ShouldNotEqual() {
+        two = new Reservation(
+                uuid,
+                "not test",
+                dateMade,
+                dateOut,
+                dateReturned,
+                bookId
+        );
+        assertNotEquals(one, two);
     }
 
     @Test
-    void getDateMade() {
-        assertThat(reservation.getDateMade(), is(dateMade));
+    void equals_ReservationObjectsHaveDifferentDateMade_ShouldNotEqual() {
+        two = new Reservation(
+                uuid,
+                partyName,
+                LocalDate.parse("2000-01-01"),
+                dateOut,
+                dateReturned,
+                bookId
+        );
+        assertNotEquals(one, two);
     }
 
     @Test
-    void setDateMade() {
-        LocalDate newDate = LocalDate.now();
-        reservation.setDateMade(newDate);
-        assertThat(reservation.getDateMade(),is(newDate));
+    void equals_ReservationObjectsHaveDifferentDateOut_ShouldNotEqual() {
+        two = new Reservation(
+                uuid,
+                partyName,
+                dateMade,
+                LocalDate.parse("2000-01-01"),
+                dateReturned,
+                bookId
+        );
+        assertNotEquals(one, two);
     }
 
     @Test
-    void getDateOut() {
-        assertThat(reservation.getDateOut(), is(dateOut));
+    void equals_ReservationObjectsHaveDifferentDateReturned_ShouldNotEqual() {
+        two = new Reservation(
+                uuid,
+                partyName,
+                dateMade,
+                dateOut,
+                LocalDate.parse("2000-01-01"),
+                bookId
+        );
+        assertNotEquals(one, two);
     }
 
     @Test
-    void setDateOut() {
-        LocalDate newDate = LocalDate.now();
-        reservation.setDateOut(newDate);
-        assertThat(reservation.getDateOut(), is(newDate));
-    }
-
-    @Test
-    void getDateReturned() {
-        assertThat(reservation.getDateReturned(), is(dateReturned));
-    }
-
-    @Test
-    void setDateReturned() {
-        LocalDate newDate = LocalDate.now();
-        reservation.setDateReturned(newDate);
-        assertThat(reservation.getDateReturned(), is(newDate));
-    }
-
-    @Test
-    void getBookId() {
-        assertThat(reservation.getBookId(), is(bookId));
+    void equals_ReservationObjectsHaveDifferentBookId_ShouldNotEqual() {
+        two = new Reservation(
+                uuid,
+                partyName,
+                dateMade,
+                dateOut,
+                dateReturned,
+                UUID.randomUUID()
+        );
+        assertNotEquals(one, two);
     }
 }

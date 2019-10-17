@@ -60,9 +60,6 @@ public class BookRepositoryTest {
     public void tearDown(){
         List<Book> all = repo.getAll();
         all.forEach(repo::remove);
-        book3 = null;
-        book2 = null;
-        book1 = null;
     }
 
 
