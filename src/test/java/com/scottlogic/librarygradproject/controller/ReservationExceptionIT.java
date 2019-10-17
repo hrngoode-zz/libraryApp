@@ -42,7 +42,6 @@ public class ReservationExceptionIT {
 
 
     private UUID uuid;
-    private Reservation reservation;
     private ObjectMapper objectMapper = new ObjectMapper();
     private String json;
 
@@ -50,9 +49,8 @@ public class ReservationExceptionIT {
 
     @BeforeEach
     void setUp(){
-
         objectMapper.registerModule(new JavaTimeModule());
-        reservation = new Reservation(
+        Reservation reservation = new Reservation(
                 uuid,
                 "post name",
                 LocalDate.parse("2019-11-11"),
@@ -70,12 +68,10 @@ public class ReservationExceptionIT {
     @Test
     public void get_AttemptToGetReservationThatDoesNotExist_ShouldThrowNoSuchElementException() {
         uuid = UUID.randomUUID();
-        assertThrows(NestedServletException.class, () -> {
-            mockMvc.perform(
-                    get("/reservations/{id}", uuid)
-            )
-                    .andReturn();
-        });
+        assertThrows(NestedServletException.class, () -> mockMvc.perform(
+                get("/reservations/{id}", uuid)
+        )
+                .andReturn());
     }
 
     @Test

@@ -15,19 +15,19 @@ public class BookService implements ServiceInterface<Book> {
         bookRepository = bookRepo;
     }
 
-    public List<Book> getAll() {
-        return bookRepository.getAll();
+    public List<Book> findAll() {
+        return bookRepository.findAll();
     }
 
     @Override
-    public Book get(UUID id) {
+    public Book find(UUID id) {
         return bookRepository
-                .get(id)
+                .find(id)
                 .orElseThrow(NoSuchElementException::new);
     }
 
     public void remove(UUID id) {
-        Book bookToBeRemoved = get(id);
+        Book bookToBeRemoved = find(id);
         bookRepository.remove(bookToBeRemoved);
     }
 
@@ -37,8 +37,12 @@ public class BookService implements ServiceInterface<Book> {
 
     public void put(Book bookToUpdate) {
         bookRepository
-                .get(bookToUpdate.getId())
+                .find(bookToUpdate.getId())
                 .ifPresent(book -> remove(book.getId()));
         add(bookToUpdate);
+    }
+
+    void removeAll(){
+        bookRepository.removeAll();
     }
 }

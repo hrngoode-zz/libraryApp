@@ -23,13 +23,13 @@ public class ReservationService implements ServiceInterface<Reservation> {
     }
 
     @Override
-    public Reservation get(UUID id) {
+    public Reservation find(UUID id) {
         return reservationRepo
                 .findById(id)
                 .orElseThrow(NoSuchElementException::new);
     }
 
-    public List<Reservation> getAll() {
+    public List<Reservation> findAll() {
         return reservationRepo.findAll();
     }
 

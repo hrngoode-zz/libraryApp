@@ -19,23 +19,20 @@ class ReservationTest {
     private UUID bookId = UUID.randomUUID();
 
 
-    private Reservation one;
+    private Reservation one = new Reservation(uuid, partyName, dateMade, dateOut, dateReturned, bookId);
     private Reservation two;
 
     @BeforeEach
     void setUp() {
-
-        one = new Reservation(uuid, partyName, dateMade, dateOut, dateReturned, bookId);
-        two = new Reservation(uuid, partyName, dateMade, dateOut, dateReturned, bookId);
     }
 
     @AfterEach
     void tearDown() {
-
     }
 
     @Test
     void equals_DuplicateReservationObjects_ShouldBeEqual() {
+        two = new Reservation(uuid, partyName, dateMade, dateOut, dateReturned, bookId);
         assertEquals(one, two);
     }
 

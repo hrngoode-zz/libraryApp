@@ -22,12 +22,12 @@ public class BookRepository implements RepositoryInterface<Book, UUID> {
     }
 
     @Override
-    public Optional<Book> get(UUID id) {
+    public Optional<Book> find(UUID id) {
         return jpaRepo.findById(id);
     }
 
     @Override
-    public List<Book> getAll() {
+    public List<Book> findAll() {
         return jpaRepo.findAll();
     }
 
@@ -43,5 +43,9 @@ public class BookRepository implements RepositoryInterface<Book, UUID> {
 
     void setJpaRepo(JpaRepo jpaRepo) {
         this.jpaRepo = jpaRepo;
+    }
+
+    public void removeAll() {
+        jpaRepo.deleteAll();
     }
 }

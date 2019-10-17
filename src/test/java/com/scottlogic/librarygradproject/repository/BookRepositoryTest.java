@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,77 +25,38 @@ public class BookRepositoryTest {
     @Qualifier("Empty")
     BookRepository repo;
 
-    private Book book1;
-    private Book book2;
-    private Book book3;
+    private Book book1 = new Book(
+                "isbn1",
+                        "title1",
+                        "author1",
+                        "publishDate1",
+                UUID.fromString("c1be0406-ba3e-436f-9a6b-aea6080e0d00")
+
+    );
+    private Book book2 = new Book(
+                "isbn2",
+                        "title2",
+                        "author2",
+                        "publishDate2",
+                     UUID.fromString("c1be0406-ba3e-436f-9a6b-aea6080e0d01")
+    );
+    private Book book3 = new Book(
+                    "isbn3",
+                            "title3",
+                            "author3",
+                            "publishDate3",
+                    UUID.fromString("c1be0406-ba3e-436f-9a6b-aea6080e0d02")
+    );
 
     @Before
     public void setUp(){
-        List<Book> all = repo.getAll();
-        all.forEach(repo::remove);
-        book1 = new Book(
-                "isbn1",
-                "title1",
-                "author1",
-                "publishDate1",
-                UUID.randomUUID()
-        );
-        book2 = new Book(
-                "isbn2",
-                "title2",
-                "author2",
-                "publishDate2",
-                UUID.randomUUID()
-        );
-        book3 = new Book(
-                    "isbn3",
-                    "title3",
-                    "author3",
-                    "publishDate3",
-                    UUID.randomUUID()
-        );
-
+        repo.removeAll();
     }
 
     @After
     public void tearDown(){
-        List<Book> all = repo.getAll();
-        all.forEach(repo::remove);
     }
-
-
-    @Test
-    public void new_BookRepository_Is_Empty() {
-        // Act
-        List<Book> books = repo.getAll();
-
-        // Assert
-        assertTrue(books.isEmpty());
-    }
-
-    @Test
-    public void add_ToEmptyRepo_IncreaseSizeOfRepoToOne() {
-        // Act
-        repo.add(book1);
-        List<Book> books = repo.getAll();
-
-        // Assert
-        assertThat(books.size(), is(1));
-    }
-
-    @Test
-    public void getAll_CalledOnRepoWithTwoBooks_ReturnListOfSizeTwo() {
-
-        // Arrange
-        repo.add(book1);
-        repo.add(book2);
-
-        // Act
-        List<Book> books = repo.getAll();
-
-        // Assert
-        assertThat(books.size(), is(2));
-    }
+    
 
     @Test
     public void get_Returns_Specific_Books() {
@@ -104,25 +66,37 @@ public class BookRepositoryTest {
         repo.add(book2);
 
         // Act
-        Book book = repo.get(book2.getId()).get();
+        Book book = repo.find(book2.getId()).get();
 
         // Assert
         assertEquals(book2, book);
     }
 
     @Test
+    public void add_ToEmptyRepo_IncreaseSizeOfRepoToOneAndAddsCorrectBook() {
+        repo.add(book1);
+
+        Book foundBook = repo.find(book1.getId()).get();
+        assertThat(repo.findAll().size(), is(1));
+        assertThat(foundBook, is(book1));
+    }
+
+    @Test
     public void delete_OnRepoWithThreeBooksInIt_ReducesRepoSizeToTwo() {
 
         // Arrange
+        List<Book> expectedList = Arrays.asList(book2, book3);
+
         repo.add(book1);
         repo.add(book2);
         repo.add(book3);
 
         // Act
         repo.remove(book1);
-        List<Book> books = repo.getAll();
+        List<Book> foundBooks = repo.findAll();
 
         // Assert
-        assertThat(books.size(), is(2));
+        assertThat(foundBooks.size(), is(2));
+        assertThat(foundBooks, is(expectedList));
     }
 }

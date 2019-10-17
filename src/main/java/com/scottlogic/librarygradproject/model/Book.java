@@ -17,7 +17,7 @@ public class Book {
     private String author;
     private String publishDate;
 
-    public Book() { }
+    public Book() {}
 
     public Book(String isbn, String title, String author, String publishDate, UUID id) {
         this.isbn = isbn;
@@ -78,9 +78,8 @@ public class Book {
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode(){
         return 31 * id.hashCode();
     }
-
 
 }

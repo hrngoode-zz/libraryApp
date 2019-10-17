@@ -20,13 +20,13 @@ public class ReservationController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Reservation get(@PathVariable(value = "id") UUID id) throws NoSuchElementException {
-        return reservationService.get(id);
+    public Reservation find(@PathVariable(value = "id") UUID id) throws NoSuchElementException {
+        return reservationService.find(id);
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Reservation> getAll() {
-        return reservationService.getAll();
+    public List<Reservation> findAll() {
+        return reservationService.findAll();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

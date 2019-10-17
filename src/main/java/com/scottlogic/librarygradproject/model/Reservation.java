@@ -34,9 +34,7 @@ public class Reservation {
     private UUID bookId;
 
     public Reservation() {
-
     }
-
 
     public Reservation(UUID id, String partyName, LocalDate dateMade, LocalDate dateOut, LocalDate dateReturned, UUID bookId) {
         this.id = id;

@@ -18,10 +18,10 @@ public class BooksControllerTest {
         BooksController controller = new BooksController(mockService);
 
         // Act
-        controller.getAll();
+        controller.findAll();
 
         // Assert
-        verify(mockService).getAll();
+        verify(mockService).findAll();
     }
 
     @Test
@@ -33,10 +33,10 @@ public class BooksControllerTest {
         BooksController controller = new BooksController(mockService);
 
         // Act
-        controller.get(id);
+        controller.find(id);
 
         // Assert
-        verify(mockService).get(id);
+        verify(mockService).find(id);
     }
 
     @Test
@@ -46,7 +46,13 @@ public class BooksControllerTest {
         BookService mockService = mock(BookService.class);
         BooksController controller = new BooksController(mockService);
 
-        Book newBook = new Book();
+        Book newBook = new Book(
+                "",
+                "",
+                "",
+                "",
+                UUID.fromString("06ada614-9323-47d5-b262-ee94f3dec068")
+        );
 
         // Act
         controller.post(newBook);

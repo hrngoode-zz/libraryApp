@@ -11,8 +11,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
@@ -46,7 +44,7 @@ class ReservationServiceTest {
     @Test
     void get_NoReservationFound_ThrowNoSuchElementException() {
         UUID uuid = UUID.randomUUID();
-        assertThrows(NoSuchElementException.class, () -> reservationService.get(uuid));
+        assertThrows(NoSuchElementException.class, () -> reservationService.find(uuid));
     }
 
     @Test
@@ -56,24 +54,10 @@ class ReservationServiceTest {
         when(reservationRepo.findById(uuid)).thenReturn(java.util.Optional.of(reservation));
 
         //Act
-        reservationService.get(uuid);
+        reservationService.find(uuid);
 
         //Assert
         verify(reservationRepo).findById(uuid);
-    }
-
-    @Test
-    void getAll() {
-        //Arrange
-        List<Reservation> dummyReservations = new ArrayList<>();
-        dummyReservations.add(reservation);
-        when(reservationRepo.findAll()).thenReturn(dummyReservations);
-
-        //Act
-        reservationService.getAll();
-
-        //Assert
-        verify(reservationRepo).findAll();
     }
 
     @Test

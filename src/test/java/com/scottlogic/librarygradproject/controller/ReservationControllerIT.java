@@ -41,8 +41,15 @@ class ReservationControllerIT {
     @Autowired
     private ReservationService reservationService;
 
-    private UUID uuid;
-    private Reservation reservation;
+    private UUID uuid = UUID.randomUUID();
+    private Reservation reservation = new Reservation(
+            uuid,
+            "post name",
+            LocalDate.parse("2019-11-11"),
+            LocalDate.parse("2040-11-11"),
+            LocalDate.parse("2043-11-11"),
+            UUID.randomUUID()
+    );
     private ObjectMapper objectMapper = new ObjectMapper();
     private String json;
 
@@ -50,16 +57,7 @@ class ReservationControllerIT {
 
     @BeforeEach
     void setUp() {
-        uuid = UUID.randomUUID();
         objectMapper.registerModule(new JavaTimeModule());
-        reservation = new Reservation(
-                uuid,
-                "post name",
-                LocalDate.parse("2019-11-11"),
-                LocalDate.parse("2040-11-11"),
-                LocalDate.parse("2043-11-11"),
-                UUID.randomUUID()
-        );
         try {
             json = objectMapper.writeValueAsString(reservation);
         } catch (IOException e) {
@@ -81,11 +79,10 @@ class ReservationControllerIT {
                 .andExpect(status().isOk())
                 .andReturn();
     }
-    //Get check that correct reservation returned
+
     @Test
     void get_SuppliedOneReservationInDb_ShouldReturn200Status() throws Exception {
         reservationService.add(reservation);
-
         MvcResult result = mockMvc.perform(
                 get("/reservations/{id}", uuid)
         )
