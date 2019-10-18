@@ -2,8 +2,8 @@ package com.scottlogic.librarygradproject.service;
 
 import com.scottlogic.librarygradproject.model.Reservation;
 import com.scottlogic.librarygradproject.repository.ReservationRepo;
-import org.jetbrains.annotations.NotNull;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
