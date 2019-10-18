@@ -74,17 +74,17 @@ public class ReservationExceptionIT {
                 .andReturn());
     }
 
-    @Test
-    public void get_AttemptToDeleteReservationThatDoesNotExist_ShouldThrowNoSuchElementException() {
+//    @Test
+    public void delete_AttemptToDeleteReservationThatDoesNotExist_ShouldThrowNoSuchElementException() {
         //TODO: Delete non-existence needs to throw BadRequest or NoSuchElementException
     }
 
-    @Test
-    public void get_AttemptToPutReservationThatDoesNotExist_ShouldThrowNoSuchElementException() {
+//    @Test
+    public void put_AttemptToPutReservationThatDoesNotExist_ShouldThrowNoSuchElementException() {
         //TODO: Fill once you know what exception you want to throw
     }
 
-    @Test
+//    @Test
     public void get_AttemptToAddInvalidReservation_ShouldThrowNoSuchElementException() {
         //TODO: Add throws BadRequest if submitted with an invalid Reservation
     }
