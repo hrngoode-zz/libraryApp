@@ -12,10 +12,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -27,25 +27,21 @@ public class BookRepositoryTest {
 
     private Book book1 = new Book(
                 "isbn1",
-                        "title1",
-                        "author1",
-                        "publishDate1",
-                UUID.fromString("c1be0406-ba3e-436f-9a6b-aea6080e0d00")
-
+                "title1",
+                "author1",
+                "publishDate1"
     );
     private Book book2 = new Book(
                 "isbn2",
-                        "title2",
-                        "author2",
-                        "publishDate2",
-                     UUID.fromString("c1be0406-ba3e-436f-9a6b-aea6080e0d01")
+                "title2",
+                "author2",
+                "publishDate2"
     );
     private Book book3 = new Book(
                     "isbn3",
-                            "title3",
-                            "author3",
-                            "publishDate3",
-                    UUID.fromString("c1be0406-ba3e-436f-9a6b-aea6080e0d02")
+                    "title3",
+                    "author3",
+                    "publishDate3"
     );
 
     @Before

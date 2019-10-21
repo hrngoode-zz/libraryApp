@@ -2,6 +2,7 @@ package com.scottlogic.librarygradproject.service;
 
 import com.scottlogic.librarygradproject.model.Reservation;
 import com.scottlogic.librarygradproject.repository.ReservationRepo;
+import com.scottlogic.librarygradproject.utils.Log;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,12 +12,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
-import java.util.NoSuchElementException;
 import java.util.UUID;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -29,7 +27,7 @@ class ReservationServiceTest {
     private ReservationService reservationService;
 
     private UUID uuid = UUID.randomUUID();
-    private Reservation reservation = new Reservation(uuid, "", null, null, null, null);;
+    private Reservation reservation = new Reservation("", null, null, null, null);
 
     @BeforeEach
     void setUp() {
@@ -43,8 +41,11 @@ class ReservationServiceTest {
 
     @Test
     void get_NoReservationFound_ThrowNoSuchElementException() {
-        UUID uuid = UUID.randomUUID();
-        assertThrows(NoSuchElementException.class, () -> reservationService.find(uuid));
+
+        UUID uuid = UUID.fromString("06ada614-9323-47d5-b262-ee94f3dec068");
+        Log returnedLog = reservationService.find(uuid);
+
+        assertFalse(returnedLog.isSuccessful());
     }
 
     @Test
@@ -71,16 +72,20 @@ class ReservationServiceTest {
 
     @Test
     void add_DateOutIsAfterDateReturned_ShouldReturnFalse() {
-        reservation = new Reservation(uuid, "", null, LocalDate.of(2001, 1, 1), LocalDate.of(2000, 1, 1), null);
+        reservation = new Reservation("", LocalDate.of(2000, 1, 1), LocalDate.of(2001, 1, 1), LocalDate.of(2000, 1, 1), null);
 
-        assertThat(reservationService.add(reservation), is(false));
+        Log returnedLog = reservationService.add(reservation);
+
+        assertFalse(returnedLog.isSuccessful());
     }
 
     @Test
     void add_DateOutIsBeforeDateMade_ShouldReturnFalse() {
-        reservation = new Reservation(uuid, "", LocalDate.of(2001, 1, 1), LocalDate.of(2000, 1, 1), LocalDate.of(2002, 1, 1), null);
+        reservation = new Reservation("", LocalDate.of(2001, 1, 1), LocalDate.of(2000, 1, 1), LocalDate.of(2002, 1, 1), null);
 
-        assertThat(reservationService.add(reservation), is(false));
+        Log returnedLog = reservationService.add(reservation);
+
+        assertFalse(returnedLog.isSuccessful());
     }
 }
 

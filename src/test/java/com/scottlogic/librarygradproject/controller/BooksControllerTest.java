@@ -50,8 +50,7 @@ public class BooksControllerTest {
                 "",
                 "",
                 "",
-                "",
-                UUID.fromString("06ada614-9323-47d5-b262-ee94f3dec068")
+                ""
         );
 
         // Act

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.scottlogic.librarygradproject.model.Reservation;
 import com.scottlogic.librarygradproject.repository.ReservationRepo;
 import com.scottlogic.librarygradproject.service.ReservationService;
+import com.scottlogic.librarygradproject.utils.Log;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
@@ -14,14 +15,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.util.NestedServletException;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @RunWith(SpringRunner.class)
@@ -51,7 +52,6 @@ public class ReservationExceptionIT {
     void setUp(){
         objectMapper.registerModule(new JavaTimeModule());
         Reservation reservation = new Reservation(
-                uuid,
                 "post name",
                 LocalDate.parse("2019-11-11"),
                 LocalDate.parse("2040-11-11"),
@@ -66,12 +66,14 @@ public class ReservationExceptionIT {
     }
 
     @Test
-    public void get_AttemptToGetReservationThatDoesNotExist_ShouldThrowNoSuchElementException() {
+    public void get_AttemptToGetReservationThatDoesNotExist_ShouldReturnFalseLog() throws Exception{
         uuid = UUID.randomUUID();
-        assertThrows(NestedServletException.class, () -> mockMvc.perform(
+        MvcResult result = mockMvc.perform(
                 get("/reservations/{id}", uuid)
         )
-                .andReturn());
+                .andReturn();
+        Log returnRes = objectMapper.readValue(result.getResponse().getContentAsString(), Log.class);
+        assertFalse(returnRes.isSuccessful());
     }
 
 //    @Test

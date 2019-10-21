@@ -2,6 +2,7 @@ package com.scottlogic.librarygradproject.controller;
 
 import com.scottlogic.librarygradproject.model.Reservation;
 import com.scottlogic.librarygradproject.service.ReservationService;
+import com.scottlogic.librarygradproject.utils.Log;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class ReservationController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Reservation find(@PathVariable(value = "id") UUID id) throws NoSuchElementException {
+    public Log find(@PathVariable(value = "id") UUID id) throws NoSuchElementException {
         return reservationService.find(id);
     }
 
@@ -30,17 +31,17 @@ public class ReservationController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable(value = "id") UUID id) {
-        reservationService.remove(id);
+    public Log delete(@PathVariable(value = "id") UUID id) {
+        return reservationService.remove(id);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void post(@RequestBody() Reservation reservation) {
-        reservationService.add(reservation);
+    public Log post(@RequestBody() Reservation reservation) {
+        return reservationService.add(reservation);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public boolean put(@RequestBody() Reservation reservation) {
+    public Log put(@RequestBody() Reservation reservation) {
         return reservationService.put(reservation);
     }
 }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.scottlogic.librarygradproject.model.Reservation;
 import com.scottlogic.librarygradproject.repository.ReservationRepo;
 import com.scottlogic.librarygradproject.service.ReservationService;
+import com.scottlogic.librarygradproject.utils.Log;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -41,9 +43,7 @@ class ReservationControllerIT {
     @Autowired
     private ReservationService reservationService;
 
-    private UUID uuid = UUID.randomUUID();
     private Reservation reservation = new Reservation(
-            uuid,
             "post name",
             LocalDate.parse("2019-11-11"),
             LocalDate.parse("2040-11-11"),
@@ -71,25 +71,29 @@ class ReservationControllerIT {
 
     @Test
     void post_CorrectParameters_ShouldReturn200Status() throws Exception {
-        mockMvc.perform(
+        MvcResult result = mockMvc.perform(
                 post("/reservations")
                         .contentType(APPLICATION_JSON_UTF8)
                         .content(json)
         )
                 .andExpect(status().isOk())
                 .andReturn();
+
+        Log returnRes = objectMapper.readValue(result.getResponse().getContentAsString(), Log.class);
+
+        assertThat(returnRes.getHttpStatus(), is(HttpStatus.OK));
     }
 
     @Test
     void get_SuppliedOneReservationInDb_ShouldReturn200Status() throws Exception {
         reservationService.add(reservation);
         MvcResult result = mockMvc.perform(
-                get("/reservations/{id}", uuid)
+                get("/reservations/{id}", reservation.getId())
         )
                 .andReturn();
 
-        Reservation returnRes = objectMapper.readValue(result.getResponse().getContentAsString(), Reservation.class);
-        assertThat( reservation, is(returnRes));
+        Log returnRes = objectMapper.readValue(result.getResponse().getContentAsString(), Log.class);
+        assertThat( reservation, is(returnRes.getReservation()));
     }
 
     @Test
@@ -125,7 +129,7 @@ class ReservationControllerIT {
     void delete_MatchingIdShouldReturn200Status() throws Exception {
         reservationService.add(reservation);
         mockMvc.perform(
-                delete("/reservations/{id}", uuid)
+                delete("/reservations/{id}", reservation.getId())
         )
                 .andExpect(status().isOk())
                 .andReturn();

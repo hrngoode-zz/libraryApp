@@ -1,14 +1,8 @@
 package com.scottlogic.librarygradproject.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -21,8 +15,6 @@ public class Reservation {
 
     private String partyName;
 
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOut;
 
@@ -36,13 +28,13 @@ public class Reservation {
     public Reservation() {
     }
 
-    public Reservation(UUID id, String partyName, LocalDate dateMade, LocalDate dateOut, LocalDate dateReturned, UUID bookId) {
-        this.id = id;
+    public Reservation(String partyName, LocalDate dateMade, LocalDate dateOut, LocalDate dateReturned, UUID bookId) {
         this.partyName = partyName;
         this.dateMade = dateMade;
         this.dateOut = dateOut;
         this.dateReturned = dateReturned;
         this.bookId = bookId;
+        this.id = UUID.randomUUID();
     }
 
     public UUID getId() {

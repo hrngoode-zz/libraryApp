@@ -21,7 +21,6 @@ import java.util.UUID;
 public class Config {
 
     //Book config
-
     @Bean
     List<Book> getFilledBookRepo() {
         return Arrays.asList(
@@ -29,22 +28,19 @@ public class Config {
                         "isbn1",
                         "title1",
                         "author1",
-                        "publishDate1",
-                        UUID.randomUUID()
+                        "publishDate1"
                 ),
                 new Book(
                         "isbn3",
                         "title3",
                         "author3",
-                        "publishDate3",
-                        UUID.randomUUID()
+                        "publishDate3"
                 ),
                 new Book(
                         "isbn2",
                         "title2",
                         "author2",
-                        "publishDate2",
-                        UUID.randomUUID()
+                        "publishDate2"
                 )
         );
     }
@@ -65,12 +61,10 @@ public class Config {
     }
 
     //Reservation config
-
     @Bean
     List<Reservation> getFilledReservationRepo() {
         return Arrays.asList(
                 new Reservation(
-                        UUID.randomUUID(),
                         "one",
                         LocalDate.now(),
                         LocalDate.of(2021, 11, 17),
@@ -78,7 +72,6 @@ public class Config {
                         UUID.fromString("8eab68d1-b312-4fa3-bdfc-816c63fbc9c2")
                 ),
                 new Reservation(
-                        UUID.randomUUID(),
                         "two",
                         LocalDate.now(),
                         LocalDate.of(2024, 11, 17),
@@ -86,7 +79,6 @@ public class Config {
                         UUID.fromString("e848c19b-6165-418a-9950-02e72f5b52e4")
                 ),
                 new Reservation(
-                        UUID.randomUUID(),
                         "three",
                         LocalDate.now(),
                         LocalDate.of(2025, 11, 17),

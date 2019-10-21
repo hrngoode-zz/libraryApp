@@ -1,8 +1,6 @@
 package com.scottlogic.librarygradproject.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
@@ -19,12 +17,12 @@ public class Book {
 
     public Book() {}
 
-    public Book(String isbn, String title, String author, String publishDate, UUID id) {
+    public Book(String isbn, String title, String author, String publishDate) {
         this.isbn = isbn;
         this.title = title;
         this.author = author;
         this.publishDate = publishDate;
-        this.id = id;
+        this.id = UUID.randomUUID();
     }
 
     public UUID getId() {
