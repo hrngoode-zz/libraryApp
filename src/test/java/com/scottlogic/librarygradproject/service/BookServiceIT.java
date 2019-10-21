@@ -66,7 +66,6 @@ public class BookServiceIT {
         //Assert
         assertThat(books, hasSize(2));
         assertThat(books.toArray(), arrayContaining(book2, book3));
-        fail();
    }
 
 }
