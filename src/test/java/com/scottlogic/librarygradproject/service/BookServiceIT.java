@@ -14,7 +14,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.arrayContaining;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
@@ -66,6 +66,7 @@ public class BookServiceIT {
         //Assert
         assertThat(books, hasSize(2));
         assertThat(books.toArray(), arrayContaining(book2, book3));
-    }
+        fail();
+   }
 
 }
