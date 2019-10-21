@@ -1,30 +1,30 @@
 version: 2.1
 
 jobs:
-    build-test:
-        working_directory: ~/project
-        docker:
-            - image: circleci/openjdk:8-jdk-stretch-node-browsers
-        steps:
-            - checkout
+  build-test:
+    working_directory: ~/project
+    docker:
+      - image: circleci/openjdk:8-jdk-stretch-node-browsers
+    steps:
+      - checkout
 
-            - restore_cache:
-                  keys:
-                      - v1-dependencies-{{ checksum "pom.xml" }}
-                      - v1-dependencies-
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "pom.xml" }}
+            - v1-dependencies-
 
-            - run: mvn dependency:go-offline
-            - save_cache:
-                  paths:
-                      - ~/.m2
-                  key: v1-dependencies-{{ checksum "pom.xml" }}
+      - run: mvn dependency:go-offline
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: v1-dependencies-{{ checksum "pom.xml" }}
 
-            - run: mvn verify
+      - run: mvn verify
 
-            - store_test_results:
-                  path: target/surefire-reports
+      - store_test_results:
+          path: target/surefire-reports
 
 workflows:
-    build-deploy:
-        jobs:
-            - build-test
+  build-deploy:
+    jobs:
+      - build-test
