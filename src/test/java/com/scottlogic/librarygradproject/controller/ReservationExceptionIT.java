@@ -30,7 +30,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @SpringBootTest
 public class ReservationExceptionIT {
 
-
     //TODO: when you make your exception handler remember to change these to more specific exceptions
     @Autowired
     private MockMvc mockMvc;
