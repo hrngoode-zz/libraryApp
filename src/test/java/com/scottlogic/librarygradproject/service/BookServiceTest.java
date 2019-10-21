@@ -37,7 +37,7 @@ public class BookServiceTest {
     public void new_BookService_Is_Empty() {
 
         // Act
-        List<Book> books = bookService.getAll();
+        List<Book> books = bookService.findAll();
 
         // Assert
         assertTrue(books.isEmpty());
@@ -45,21 +45,26 @@ public class BookServiceTest {
 
     @Test
     public void getAll_Calls_Repo_GetAll() {
-        bookService.getAll();
-        verify(mockRepo).getAll();
+        bookService.findAll();
+        verify(mockRepo).findAll();
     }
 
     @Test
     public void get_Calls_Repo_Get()  {
 
-        Book newBook = new Book();
+        Book newBook = new Book(
+                "",
+                "",
+                "",
+                ""
+        );
         UUID id = new UUID(1,1);
         Optional<Book> optionalBook = Optional.of(newBook);
 
-        when(mockRepo.get(id)).thenReturn(optionalBook);
+        when(mockRepo.find(id)).thenReturn(optionalBook);
 
-        bookService.get(id);
-        verify(mockRepo).get(id);
+        bookService.find(id);
+        verify(mockRepo).find(id);
     }
 
     public void remove() {

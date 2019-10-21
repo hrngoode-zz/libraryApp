@@ -20,13 +20,13 @@ public class BooksController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Book> getAll() {
-        return bookService.getAll();
+    public List<Book> findAll() {
+        return bookService.findAll();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Book get(@PathVariable(value = "id") UUID id) {
-        return bookService.get(id);
+    public Book find(@PathVariable(value = "id") UUID id) {
+        return bookService.find(id);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

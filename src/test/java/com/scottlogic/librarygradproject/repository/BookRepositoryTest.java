@@ -1,108 +1,98 @@
 package com.scottlogic.librarygradproject.repository;
 
 import com.scottlogic.librarygradproject.model.Book;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
+@SpringBootTest
+@RunWith(SpringJUnit4ClassRunner.class)
 public class BookRepositoryTest {
 
-    @Test
-    public void new_BookRepository_Is_Empty() {
+    @Autowired
+    @Qualifier("Empty")
+    BookRepository repo;
 
-        // Arrange
-        BookRepository repo = new BookRepository();
+    private Book book1 = new Book(
+                "isbn1",
+                "title1",
+                "author1",
+                "publishDate1"
+    );
+    private Book book2 = new Book(
+                "isbn2",
+                "title2",
+                "author2",
+                "publishDate2"
+    );
+    private Book book3 = new Book(
+                    "isbn3",
+                    "title3",
+                    "author3",
+                    "publishDate3"
+    );
 
-        // Act
-        List<Book> books = repo.getAll();
-
-        // Assert
-        assertTrue(books.isEmpty());
+    @Before
+    public void setUp(){
+        repo.removeAll();
     }
 
-    @Test
-    public void add_Inserts_New_Book() {
-
-        // Arrange
-        BookRepository repo = new BookRepository();
-        Book newBook = new Book();
-
-        // Act
-        repo.add(newBook);
-        List<Book> books = repo.getAll();
-
-        // Assert
-        assertArrayEquals(new Book[] {newBook}, books.toArray());
+    @After
+    public void tearDown(){
     }
-
-    @Test
-    public void add_Sets_New_Id() {
-
-        // Arrange
-        BookRepository repo = new BookRepository();
-        Book newBook = new Book();
-
-        // Act
-        repo.add(newBook);
-        List<Book> books = repo.getAll();
-
-        // Assert
-        assertEquals(0, books.get(0).getId());
-    }
-
-    @Test
-    public void getAll_Returns_All_Books() {
-
-        // Arrange
-        BookRepository repo = new BookRepository();
-        Book newBook1 = new Book();
-        Book newBook2 = new Book();
-        repo.add(newBook1);
-        repo.add(newBook2);
-
-        // Act
-        List<Book> books = repo.getAll();
-
-        // Assert
-        assertArrayEquals(new Book[] { newBook1, newBook2 }, books.toArray());
-    }
+    
 
     @Test
     public void get_Returns_Specific_Books() {
 
         // Arrange
-        BookRepository repo = new BookRepository();
-        Book newBook1 = new Book();
-        Book newBook2 = new Book();
-        repo.add(newBook1);
-        repo.add(newBook2);
+        repo.add(book1);
+        repo.add(book2);
 
         // Act
-        Book book = repo.get(newBook2.getId()).get();
+        Book book = repo.find(book2.getId()).get();
 
         // Assert
-        assertEquals(newBook2, book);
+        assertEquals(book2, book);
     }
 
     @Test
-    public void delete_Removes_Correct_Book() {
+    public void add_ToEmptyRepo_IncreaseSizeOfRepoToOneAndAddsCorrectBook() {
+        repo.add(book1);
+
+        Book foundBook = repo.find(book1.getId()).get();
+        assertThat(repo.findAll().size(), is(1));
+        assertThat(foundBook, is(book1));
+    }
+
+    @Test
+    public void delete_OnRepoWithThreeBooksInIt_ReducesRepoSizeToTwo() {
 
         // Arrange
-        BookRepository repo = new BookRepository();
-        Book newBook1 = new Book();
-        Book newBook2 = new Book();
-        Book newBook3 = new Book();
-        repo.add(newBook1);
-        repo.add(newBook2);
-        repo.add(newBook3);
+        List<Book> expectedList = Arrays.asList(book2, book3);
+
+        repo.add(book1);
+        repo.add(book2);
+        repo.add(book3);
 
         // Act
-        repo.remove(newBook1);
-        List<Book> books = repo.getAll();
+        repo.remove(book1);
+        List<Book> foundBooks = repo.findAll();
 
         // Assert
-        assertArrayEquals(new Book[] { newBook2, newBook3 }, books.toArray());
+        assertThat(foundBooks.size(), is(2));
+        assertThat(foundBooks, is(expectedList));
     }
 }
